@@ -77,4 +77,25 @@ public class MainViewModel extends AndroidViewModel {
     public void retrieveForecast(String latLon, WeatherCallback callback) {
         mRepository.retrieveForecast(latLon, callback);
     }
+
+    public void fetchAllForecastNoInterval() {
+        if (Logger.ISLOGABLE) Logger.d(TAG, "fetchAllForecastsNoInterval()");
+        HashMap<String, String> localizations = mRepository.getLocalizations();
+        List<Weather> updatedList = new ArrayList<>();
+
+        for (String latlon : localizations.values()) {
+            mRepository.retrieveForecast(latlon, new WeatherCallback() {
+                @Override
+                public void onSuccess(Weather result) {
+                    updatedList.add(result);
+                    if (updatedList.size() == localizations.size()) {
+                        _weatherList.setValue(updatedList);
+                    }
+                }
+
+                @Override
+                public void onFailure(String error) {}
+            });
+        }
+    }
 }

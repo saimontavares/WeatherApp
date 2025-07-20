@@ -35,8 +35,10 @@ public class MainActivity extends AppCompatActivity {
         mainViewModel.getWeatherList().observe(this,
                 weathers -> adapter.updateWeathers(weathers));
 
-        fetchButton.setOnClickListener(v ->
-                Toast.makeText(MainActivity.this, "Not Implemenented yet",
-                Toast.LENGTH_SHORT).show());
+        fetchButton.setOnClickListener(v -> {
+            // Toast.makeText(MainActivity.this, "Implemented", Toast.LENGTH_SHORT).show();
+            mainViewModel.fetchAllForecastNoInterval();
+        }
+        );
     }
 }
