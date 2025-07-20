@@ -16,7 +16,9 @@ import com.example.findinglogs.model.util.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class MainViewModel extends AndroidViewModel {
 
@@ -55,7 +57,14 @@ public class MainViewModel extends AndroidViewModel {
                 public void onSuccess(Weather result) {
                     updatedList.add(result);
                     if (updatedList.size() == localizations.size()) {
-                        _weatherList.setValue(updatedList);
+                        List<Weather> uniqueList = new ArrayList<>();
+                        Set<String> names = new HashSet<>();
+                        for(Weather w : updatedList){
+                            if(names.add(w.getName())){
+                                uniqueList.add(w);
+                            }
+                        }
+                        _weatherList.setValue(uniqueList);
                         handler.postDelayed(fetchRunnable, FETCH_INTERVAL);
                     }
                 }
@@ -89,7 +98,14 @@ public class MainViewModel extends AndroidViewModel {
                 public void onSuccess(Weather result) {
                     updatedList.add(result);
                     if (updatedList.size() == localizations.size()) {
-                        _weatherList.setValue(updatedList);
+                        List<Weather> uniqueList = new ArrayList<>();
+                        Set<String> names = new HashSet<>();
+                        for(Weather w : updatedList){
+                            if(names.add(w.getName())){
+                                uniqueList.add(w);
+                            }
+                        }
+                        _weatherList.setValue(uniqueList);
                     }
                 }
 
